@@ -39,6 +39,10 @@ class MandrillTemplateChannel
         }
 
         $template = new Template($templateMessage->template);
+        
+        if (method_exists($notification, 'getVariables')) {
+            $template->setContent($notification->getVariables($notifiable));
+        }
 
         list ($fromAddress, $fromName) = array_pad($templateMessage->from, 2, null);
         list ($replyToAddress, $replyToName) = array_pad($templateMessage->replyTo, 2, null);
